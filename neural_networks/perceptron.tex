@@ -1,0 +1,36 @@
+\documentclass[../article.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=4mm]
+  % input layer
+  {   
+    \node(x0)[sknn-unit]{$x_0$};
+    \node(x1)[sknn-unit, below=of x0]{$x_1$};
+    \node(xdots)[below=of x1]{\vdots};
+    \node(xD)[sknn-unit, below=of xdots]{$x_D$};        
+  }
+  % output layer
+  {
+    \node(y1)[sknn-unit, below right=2mm and 3cm of x0]{$y_1$};
+    \node(ydots)[below=of y1]{\vdots};
+    \node(yC)[sknn-unit, below=of ydots]{$y_C$};
+  }
+  % edges
+    \path[shorten >=1pt,->] 
+      (x0) edge (y1)
+           edge (yC)
+      (x1) edge (y1)
+           edge (yC)
+      (xD) edge (y1)
+           edge (yC);
+  % layer names
+  \coordinate (inlayer) at ($(x0.north) + (0, 2mm)$);
+  \coordinate (outlayer) at (inlayer -| y1);
+  \pic at (inlayer) {sknn-layer-title={15mm}{Input Layer}};
+  \pic at (outlayer) {sknn-layer-title={15mm}{Output Layer}};
+
+\end{tikzpicture}
+
+\end{figure}
+\end{document}
