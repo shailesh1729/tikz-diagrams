@@ -1,0 +1,25 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[every node/.style={font=\Large}]
+\node [fill=blue!60!, text=yellow, rounded corners, text width=10cm, font=\bf] (sl) {\Huge Sparse and Redundant Representations};
+\matrix (apps)[below=of sl, fill=gray, column sep=3mm, row sep=3mm, yshift=-1cm,
+every node/.style={text=black, fill=white}
+]{
+  &
+  \node{Blind source  separation}; & 
+  \node{Compression}; & 
+  \node{Inpainting};&
+  \\
+  &
+  \node{Denoising};&
+  \node{Demosaicing};&
+  \node{Super-resolution};&
+  \\
+};
+\draw [-{Latex[length=8mm, width=1cm]}, double, double distance=5mm, line width=2pt, color=gray] (sl) -- (apps);
+\end{tikzpicture}
+
+\end{figure}
+\end{document}
