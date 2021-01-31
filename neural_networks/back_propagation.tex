@@ -1,0 +1,23 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[font=\tiny]
+    \node(yi)[sknn-unit]{$y_i^{l}$};
+    \node(y1)[sknn-unit, above right=4mm and 15mm of yi]{$y_1^{l+1}$};
+    \node(ydots)[below=1mm of y1]{\vdots};
+    \node(ym)[sknn-unit, below right=2mm and 15mm of yi]{$y_{m^{(l+1)}}^{l+1}$};
+
+    \draw[->] (yi.30) -- (y1.210);
+    \draw[<-, red] (yi.60) -- 
+      node[above, sloped, black] {$\delta_1^{(l+1)}$} 
+      (y1.180);
+
+    \draw[->] (yi.330) -- (ym.150);
+    \draw[<-, red] (yi.300) -- 
+      node[below, sloped, black] {$\delta_{m^{l+1}}^{l+1}$}
+      (ym.180);
+
+\end{tikzpicture}
+\end{figure}
+\end{document}
