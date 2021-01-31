@@ -1,0 +1,101 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=4mm, font=\tiny]
+  \def\fin{2/3}
+  \def\fout{1/3}
+  % input layer
+  {   
+    \node(x0)[sknn-unit]{$x_0$};
+    \node(x1)[sknn-unit, below=of x0]{$x_1$};
+    \node(xdots)[below=of x1]{\vdots};
+    \node(xD)[sknn-unit, below=of xdots]{$x_D$};        
+  }
+  % first hidden layer
+  {
+    \node(y10)[sknn-unit, above right=-2mm and 15mm of x0]{$y_0^{(1)}$};
+    \node(y11)[sknn-unit, below=of y10]{$y_1^{(1)}$};
+    \node(y1dots)[below=of y11]{\vdots};
+    \node(y1m)[sknn-unit, below right=-2mm and 15mm of xD]{$y_{m^(1)}^{(1)}$};
+  }
+  % Middle layers
+  {
+    \node(ym0dots)[below right=-2mm and 15mm of y10]{\dots};
+    \node(ym1dots)[] at (y1dots -| ym0dots){\dots};
+    \node(ymmdots)[above right=-2mm and 15mm of y1m]{\dots};
+  }
+  % L-th hidden layer
+  {
+    \node(yl0)[sknn-unit, above right=-2mm and 15mm of ym0dots]{$y_0^{(L)}$};
+    \node(yl1)[sknn-unit, below=of yl0]{$y_1^{(L)}$};
+    \node(yldots)[below=of yl1]{\vdots};
+    \node(ylm)[sknn-unit] at (y1m -| yldots){$y_{m^(L)}^{(L)}$};
+  }
+  % output layer
+  {
+    \node(yo1)[sknn-unit, below right=-2mm and 15mm of yl0]{$y_1^{(L+1)}$};
+    \node(yo2)[sknn-unit, below=of yo1]{$y_2^{(L+1)}$};
+    \node(yodots)[below=of yo2]{\vdots};
+    \node(yoC)[sknn-unit, below=of yodots]{$y_C^{L+1}$};
+  }
+  % edges
+  \begin{scope}[every edge/.style={
+      shorten >=1pt,->, 
+      draw=green
+    },
+    every path/.style={draw=green},
+    fade in/.style={path fading=west, shorten >=1pt, ->}]
+    \path[] 
+      (x0) edge (y11)
+           edge (y1m)
+      (x1) edge (y11)
+           edge (y1m)
+      (xD) edge (y11)
+           edge (y1m);
+
+    \draw[-, path fading=east]
+      (y10) -- ($(y10)!\fin!(ym1dots)$)
+      (y10) -- ($(y10)!\fin!(ymmdots)$)
+      (y11) -- ($(y11)!\fin!(ym1dots)$)
+      (y11) -- ($(y11)!\fin!(ymmdots)$)
+      (y1m) -- ($(y1m)!\fin!(ym1dots)$)
+      (y1m) -- ($(y1m)!\fin!(ymmdots)$);
+
+     
+    \draw[fade in] (barycentric cs:ym0dots=2,yl1=1) -- (yl1);
+    \draw[fade in] (barycentric cs:ym0dots=2,ylm=1) -- (ylm);
+    \draw[fade in] (barycentric cs:ym1dots=2,yl1=1) -- (yl1);
+    \draw[fade in] (barycentric cs:ym1dots=2,ylm=1) -- (ylm);
+    \draw[fade in] (barycentric cs:ymmdots=2,yl1=1) -- (yl1);
+    \draw[fade in] (barycentric cs:ymmdots=2,ylm=1) -- (ylm);
+
+    \path 
+      (yl0) edge (yo1)
+           edge (yo2)
+           edge (yoC)
+      (yl1) edge (yo1)
+           edge (yo2)
+           edge (yoC)
+      (ylm) edge (yo1)
+           edge (yo2)
+           edge (yoC);
+      ;
+  \end{scope}
+  % layer names
+  \coordinate (inlayer) at ($(x0.north) + (0, 6mm)$);
+  \pic at (inlayer) {sknn-layer-title={10mm}{Input Layer}};
+
+  \coordinate (layer1) at (inlayer -| y10);
+  \pic at (layer1) {sknn-layer-title={10mm}{1st Hidden Layer}};
+
+  \coordinate (layerL) at (inlayer -| yl0);
+  \pic at (layerL) {sknn-layer-title={10mm}{L-th Hidden Layer}};
+
+  \coordinate (outlayer) at (inlayer -| yo1);
+  \pic at (outlayer) {sknn-layer-title={10mm}{Output Layer}};
+
+\end{tikzpicture}
+
+\end{figure}
+\end{document}
