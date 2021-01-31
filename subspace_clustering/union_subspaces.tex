@@ -1,0 +1,51 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[x  = {(1cm,0cm)},
+                    y  = {(0.4cm,0.6cm)},
+                    z  = {(0cm,1cm)},
+                    scale = 1.5,
+                    color = {lightgray}]
+\begin{scope}[opacity=0.4, color=blue]
+\fill[] (-2, -2, 0) -- +(4, 0, 0) -- +(4, 4, 0) -- +(0, 4, 0) -- cycle;
+\fill[] (-2, 0, -2) -- +(4, 0, 0) -- +(4, 0, 4) -- +(0, 0, 4) -- cycle;
+\fill[] (0, -2, -2) -- +(0, 4, 0) -- +(0, 4, 4) -- +(0, 0, 4) -- cycle;
+\end{scope}
+\begin{scope}[canvas is xy plane at z=0, transform shape]
+    % data points in xy plane
+    \foreach \c in {1,...,4}{
+        \pgfmathsetmacro{\a}{2*rnd}
+        \pgfmathsetmacro{\b}{2*rnd}
+        \node[circle,fill,inner sep=1pt, color=black] at (\a, \b){};
+    }
+    % x-axis
+    \draw[black,->] (0,0) -- (3,0) node (x-axis) [right, scale=0.5] {$x$};
+    % y-axis
+    \draw[black,->] (0,0) -- (0,3) node (y-axis) [above, scale=0.5] {$y$};
+\end{scope}
+ 
+\begin{scope}[canvas is yz plane at x=0, transform shape]
+    % data points in yz plane
+    \foreach \c in {1,...,6}{
+        \pgfmathsetmacro{\a}{-1.6*rnd}
+        \pgfmathsetmacro{\b}{-1.6*rnd}
+        \node[circle,fill,inner sep=1pt, color=yellow!50!black] at (\a, \b){};
+    }
+    % z-axis
+    \draw[black,->] (0,0) -- (0,3) node (z-axis) [above] {$z$};
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=0]
+    % data points in xz plane
+    \foreach \c in {1,...,8}{
+        \pgfmathsetmacro{\a}{-2*rnd}
+        \pgfmathsetmacro{\b}{2*rnd}
+        \node[circle,fill,inner sep=1pt, color=red!50!black] at (\a, \b){};
+    }
+\end{scope}
+
+ 
+\end{tikzpicture}
+\end{figure}
+\end{document}
