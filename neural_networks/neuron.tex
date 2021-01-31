@@ -1,0 +1,28 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,->]
+    % nodes
+    \node[sknn-unit](unit){$y$};
+    
+    \begin{scope}[node distance=15mm]
+        \node(dots)[left=of unit]{\vdots};
+    \end{scope}
+    
+    \begin{scope}[node distance=3mm]
+        \node(x1)[above=of dots]{$x_1$};
+        \node(w0)[above=of x1]{$w_0$};
+        \node(xD)[below=of dots]{$x_D$};
+    \end{scope}
+    
+    \node(output)[right=of unit]{$y := f(z)$};
+    % edges
+    \path (w0)  edge (unit)
+          (x1)  edge (unit)
+          (xD)  edge (unit);
+    \path (unit) edge[shorten >=3mm] (output);
+\end{tikzpicture}
+\end{figure}
+\end{document}
+
