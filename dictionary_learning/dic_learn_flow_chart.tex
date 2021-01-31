@@ -1,0 +1,64 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+    >=latex',
+    font={\footnotesize},
+    every node/.style={
+        draw,
+        minimum width=2cm,
+        minimum height=0.5cm,
+        align=left,
+        scale=0.8
+    },
+    comment/.style={
+        draw=none, 
+        rectangle,
+        text=black!80!
+    }, 
+    node distance=3mm,
+    scale=0.8
+]
+\node (terminal1) [terminal] {START};
+\node (predproc1) [below=of terminal1, predproc]
+{Data set $X$};
+\node (process1) [below=of predproc1, process]{
+    Initialize\\dictionary $\mathcal{D}$
+};
+\node (process2) [below=of process1, process]{
+    Initialize sparse\\approximations $\mathcal{A}$
+};
+\node (process2-comment)[right=of process2, comment]{
+    By solving $X \approx \mathcal{D} \mathcal{A}$\\ using some
+    suitable\\ greedy sparse\\ recovery algorithm
+};
+\node (process3) [below=of process2, process]{
+    Update dictionary $\mathcal{D}$
+};
+\node (process4) [below=of process3, process]{
+    Update sparse\\approximations $\mathcal{A}$
+};
+\node (decision1)[below=of process4, decision] {
+    Converged?
+};
+\node (decision1-comment)[right=of decision1, comment]{
+    Check the reduction\\in approximation error
+};
+\node (terminal2)[below=of decision1, terminal]{
+    END
+};
+
+\draw[->] (terminal1.south) -- (predproc1);
+\draw[->] (predproc1) -- (process1);
+\draw[->] (process1) -- (process2);
+\draw[->] (process2) -- (process3);
+\draw[->] (process3) -- (process4);
+\draw[->] (process4) -- (decision1);
+\draw[->] (decision1.west) -- +(-1cm, 0cm) |- node[draw=none, near start, xshift=-5mm]{No} (process3.west);
+\draw[->] (decision1) -- node[draw=none, xshift=5mm]{Yes} (terminal2);
+
+
+\end{tikzpicture}
+\end{figure}
+\end{document}
