@@ -1,0 +1,53 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+font=\footnotesize,
+every node/.style={minimum size=5mm, scale=0.8}
+, scale=0.8
+]
+\matrix[row sep=5mm, column sep=1cm]{
+\node(m0) {} ;  & 
+\node(phi0) {} ; & 
+\node(s0) {} ; & 
+\node(dict0) {} ; & 
+\node(rep0) {} ;  \\
+\node (m) [rectangle, shade, rotate=90, top color=red!40, bottom color=red!20, minimum width=3cm] {Measurements}; &  
+\node (phi) [rectangle, shade, minimum height=3cm, minimum width=4cm, top color=green!40] {Sensing Matrix}; & 
+\node (s) [rectangle, shade, rotate=90, top color=brown!40, bottom color=brown!20, minimum width=3cm] {Signal}; &  
+\node (dict) [rectangle, shade, minimum height=3cm, minimum width=4cm, , top color=magenta!40] {Dictionary}; & 
+\node (rep) [rectangle, shade, rotate=90, top color=blue!40, bottom color=blue!20, minimum width=3cm] {Representation}; \\
+\node (m2) {$\color{red!40!black}y$}; & 
+\node (phi2) {$\color{green!40!black}\Phi$}; & 
+\node (s2) {$\color{brown!40!black}x$}; & 
+\node (dict2) {$\color{magenta!40!black}\mathcal{D}$}; & 
+\node (rep2)  {$\color{blue!40!black}\alpha$}; \\
+\node(m3) {} ;  & 
+\node(phi3) {} ; & 
+\node(s3) {} ; & 
+\node(dict3) {} ; & 
+\node(rep3) {} ;  \\
+};
+
+\path  (s3)  edge [->, green!40!black] node [below] {$y = \Phi x + n$}  
+                node[above] {measurement noise} (m3)
+        (rep3)  edge [->, magenta!40!black] node [below] {$x = \mathcal{D}  \alpha + e$}  
+                  node[above] {approximation error} (s3)
+        ;
+
+% Sparse recovery from compressed measurements
+\draw [->] (m0)  -- ++(0, 2cm) -- 
+node [above] {Sparse Recovery}
+node [below] {$\widehat{\alpha} = \Delta_r(\Phi \mathcal{D}, y ) $} 
+($(rep0) + (0, 2cm)$) 
+-- (rep0);
+
+\draw [->] (s0)  -- ++(0, 1cm) --   
+node [above] {Sparse Approximation}
+node [below] {$\widehat{\alpha} = \Delta_a(\mathcal{D}, x ) $} 
+($(rep0)+(0, 1cm)$);
+\end{tikzpicture}
+
+\end{figure}
+\end{document}
