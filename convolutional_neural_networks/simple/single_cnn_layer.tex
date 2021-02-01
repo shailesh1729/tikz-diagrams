@@ -1,0 +1,44 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\begin{tikzpicture}[
+cell/.style={
+  draw=blue,
+  shape=rectangle,
+  minimum size=5mm,
+  fill=red!10
+}
+]
+% image
+\draw (0, 0) rectangle (3,3);
+% image is 30mm by 30mm 6x6 cells. each cell is 5mm x 5mm
+\node[cell](na)  at ($(4*5mm,1*5mm) + (2.5mm,2.5mm)$){};
+\node[cell](nb)  at ($(2*5mm,2*5mm) + (2.5mm,2.5mm)$){};
+\node[cell](nc)  at ($(4*5mm,4*5mm) + (2.5mm,2.5mm)$){};
+\node at (15mm, 5cm) {
+\begin{tabular}{c}
+Input Image\\
+or input feature map
+\end{tabular}
+};
+% CNN layer
+\begin{scope}[xshift=5cm]
+\foreach \r in {0,...,3}{
+  \fill[opacity=0.2]  ($(0, 0) + (\r*6mm, \r*6mm)$) rectangle +(2cm, 2cm);
+}
+\node at (2cm, 5cm) {Output Feature Maps};
+
+\coordinate(ca) at (18mm, 5mm);
+\coordinate(cb) at (16mm, 15mm);
+\coordinate(cc) at (35mm, 35mm);
+\draw (na.north) -- (ca)  (na.south) -- (ca);
+\draw (nb.north) -- (cb)  (nb.south) -- (cb);
+\draw (nb.north) -- (cb)  (nb.south) -- (cb);
+\draw (nc.north) -- (cc)  (nc.south) -- (cc);
+\end{scope}
+
+
+\end{tikzpicture}
+\centering
+\end{figure}
+\end{document}
