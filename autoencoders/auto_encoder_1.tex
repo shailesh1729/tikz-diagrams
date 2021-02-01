@@ -1,0 +1,76 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+diagram/.style={
+  fill=red!10,
+  matrix of math nodes,
+  nodes in empty cells,
+  row sep=6mm,
+  column sep=20mm,
+  nodes={minimum height=12mm, 
+    minimum width=40mm,
+    anchor=center,
+    draw},
+},
+    font=\huge,
+]
+\matrix[diagram](dg) at (0, 0){
+   |[sknn h]| h & |[sknn fc]|\text{fc}_{R, C_1}\\
+   |[sknn bias]| \text{bias} & |[sknn bias]| \text{bias} \\
+   |[sknn fc]|\text{fc}_{C_1, R} & |[sknn h]| h \\
+   |[sknn h]| h & |[sknn fc]|\text{fc}_{C_1, C_2} \\
+   |[sknn bias]| \text{bias} & |[sknn bias]| \text{bias} \\
+   |[sknn fc]| \text{fc}_{C_2, C_1} & |[sknn h]| h \\
+   |[sknn h]| h & |[sknn fc]| \text{fc}_{C_2, Q}\\
+   |[sknn bias]| \text{bias} & |[sknn bias]| \text{bias} \\
+   |[sknn fc]|\text{fc}_{Q, C_2} & |[sknn h]| h \\
+};
+
+% encoder input
+\node[above=of dg-1-2] (input){$x$};
+% encoder output
+\node[below=of dg-9-2] (z){$z$}; 
+% decoder output
+\node[above=of dg-1-1] (rec){$\bar{x}$};
+% loss function 
+\node[](loss) at ($(input)!1/2!(rec)$) 
+{$\mathcal{L}(\bar{x}, x)$};
+
+
+% edges
+\draw[->] (dg-1-2) edge (dg-2-2)
+          (dg-2-2) edge (dg-3-2)
+          (dg-3-2) edge (dg-4-2)
+          (dg-4-2) edge (dg-5-2)
+          (dg-5-2) edge (dg-6-2)
+          (dg-6-2) edge (dg-7-2)
+          (dg-7-2) edge (dg-8-2)
+          (dg-8-2) edge (dg-9-2)
+          ;
+
+\draw[<-] (dg-1-1) edge (dg-2-1)
+          (dg-2-1) edge (dg-3-1)
+          (dg-3-1) edge (dg-4-1)
+          (dg-4-1) edge (dg-5-1)
+          (dg-5-1) edge (dg-6-1)
+          (dg-6-1) edge (dg-7-1)
+          (dg-7-1) edge (dg-8-1)
+          (dg-8-1) edge (dg-9-1)
+          ;
+
+% encoder input
+\draw[->] (input) -- (dg-1-2);
+%  encoder output
+\draw[->] (dg-9-2) -- (z);
+% decoder input
+\draw[->] (z) -| (dg-9-1);
+%  decoder output
+\draw[<-] (rec) -- (dg-1-1);
+% loss
+\draw[-, dashed] (rec) -- (loss) -- (input);
+
+\end{tikzpicture}
+\end{figure}
+\end{document}
