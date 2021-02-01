@@ -1,0 +1,84 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\def\la{4}
+\pgfmathtruncatemacro {\na }{\la -1}
+\def\lb{6}
+\pgfmathtruncatemacro {\nb }{\lb -1}
+\def\lc{8}
+\pgfmathtruncatemacro {\nc }{\lc -1}
+\def\ld{10}
+\pgfmathtruncatemacro {\nd }{\ld -1}
+\def\mwa{10mm}
+\def\mwb{9mm}
+\def\mwc{8mm}
+\def\mwd{7mm}
+\def\ga{3mm}
+\def\gb{2mm}
+\def\gc{1mm}
+\def\gd{1mm}
+\def\fce{8mm}
+\def\fcf{4mm}
+% input layer
+\begin{scope}[xshift=-15mm]
+\draw[opacity=0.4] (0, 0) rectangle (1,1);
+\node at (0.5,-1){\begin{tabular}{c}input image\\layer $l = 0$\end{tabular}};
+\end{scope}
+
+% cnn layer a
+\begin{scope}
+\foreach \r in {0,...,\na}{
+  \fill[opacity=0.2]  ($(0, 0) + (\r*\ga, \r*\ga)$) rectangle +(\mwa, \mwa);
+}
+\node at ($(\na/2*\ga,\na*\ga) + (0.5, 2)$){
+\begin{tabular}{c}convolutional layer\\with nonlinearities\\layer $l = 1$\end{tabular}};
+\end{scope}
+
+
+% cnn layer b
+\begin{scope}[xshift=20mm]
+\foreach \r in {0,...,\nb}{
+  \fill[opacity=0.2]  ($(0, 0) + (\r*\gb, \r*\gb)$) rectangle +(\mwb, \mwb);
+}
+\node at ($(\nb/2*\gb,0) + (0.5,-1)$){
+\begin{tabular}{c}subsampling layer\\layer $l = 2$\end{tabular}};
+\end{scope}
+
+% cnn layer c
+\begin{scope}[xshift=40mm]
+\foreach \r in {0,...,\nc}{
+  \fill[opacity=0.2]  ($(0, 0) + (\r*\gc, \r*\gc)$) rectangle +(\mwc, \mwc);
+}
+\node at ($(\nc/2*\gc,\nc*\gc) + (0.5, 2)$){
+\begin{tabular}{c}convolutional layer\\with nonlinearities\\layer $l = 3$\end{tabular}};
+\end{scope}
+
+% cnn layer d
+\begin{scope}[xshift=60mm]
+\foreach \r in {0,...,\nc}{
+  \fill[opacity=0.2]  ($(0, 0) + (\r*\gd, \r*\gd)$) rectangle +(\mwd, \mwd);
+}
+\node at ($(\nd/2*\gd,0) + (0.5,-1)$){
+\begin{tabular}{c}subsampling layer\\layer $l = 4$\end{tabular}};
+\end{scope}
+
+% fc 1
+\begin{scope}[xshift=80mm]
+\fill [opacity=0.6] (0, 0) -- ++(\fce, \fce) -- ++(3mm, 0) -- ++(-\fce, -\fce) -- cycle;
+\node at ($(\fce/2,\na*\ga) + (1.5mm, 2)$){
+\begin{tabular}{c}fully connected layer\\layer $l = 5$\end{tabular}};
+\end{scope}
+
+% fc 2
+\begin{scope}[xshift=100mm, yshift=1mm]
+\fill [opacity=0.6] (0, 0) -- ++(\fcf, \fcf) -- ++(3mm, 0) -- ++(-\fcf, -\fcf) -- cycle;
+\node at ($(\fcf/2, -10mm) + (1.5mm, 0)$){
+\begin{tabular}{c}fully connected layer\\output layer $l = 6$\end{tabular}};
+\end{scope}
+
+
+\end{tikzpicture}
+\end{figure}
+\end{document}
