@@ -1,0 +1,22 @@
+\documentclass[../../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+      title=Sigmoid activation function,
+      xlabel={$x$},
+      xmin=-4,
+      xmax=4,
+      minor x tick num=3,
+      ylabel={$\sigma(x)$},
+      ymin=-0.2,
+      ymax=1.2,
+      minor y tick num=3,
+      grid=both,
+      ]
+      \addplot[green,smooth] {1/(1+exp(-x))};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+\end{document}
