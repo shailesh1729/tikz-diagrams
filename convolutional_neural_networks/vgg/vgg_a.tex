@@ -1,0 +1,107 @@
+\documentclass[../../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+input/.style={
+  rectangle,
+  draw=blue,
+  fill=gray!20,
+},
+conv/.style={
+  rectangle,
+  draw=blue,
+  fill=olive!20,
+},
+pool/.style={
+  rectangle,
+  draw=blue,
+  fill=brown!20,
+},
+fc/.style={
+  rectangle,
+  draw=blue,
+  fill=orange!20,
+},
+softmax/.style={
+  rectangle,
+  draw=blue,
+  fill=purple!20,
+},
+desc/.style={
+  align=left,
+  font=\footnotesize,
+},
+decor/.style={
+  draw=blue, decorate, decoration={brace, raise=5pt}
+},
+blk label/.style={
+  above=6pt, sloped, font=\footnotesize
+}
+]
+\node(title){VGG Configuration A, 11 Layers};
+\matrix[
+  below=2mm of title,
+  nodes in empty cells,
+  row sep=2mm,
+  nodes={
+    minimum width=40mm
+  }
+]{
+\\
+\node{Layer};&\node{Output Size};\\
+ \node[input](input){input}; & \node[desc]{$224 \times 224 \times 3$};\\
+ \node[conv](a1){conv, 3x3, 64, ReLU}; & \node[desc]{$224 \times 224 \times 64$};\\
+  \node[pool](ap){maxpool, 2x2};& \node[desc]{$112 \times 112 \times 64$};\\
+  \node[conv](b1){conv, 3x3, 128, ReLU}; & \node[desc]{$112 \times 112 \times 128$};\\
+  \node[pool](bp){maxpool, 2x2}; & \node[desc]{$56 \times 56 \times 128$};\\
+  \node[conv](c1){conv, 3x3, 256, ReLU}; & \node[desc]{$56 \times 56 \times 256$};\\
+  \node[conv](c2){conv, 3x3, 256, ReLU}; & \node[desc]{$56 \times 56 \times 256$};\\
+  \node[pool](cp){maxpool, 2x2}; & \node[desc]{$28 \times 28 \times 256$};\\
+  \node[conv](d1){conv, 3x3, 512, ReLU}; & \node[desc]{$28 \times 28 \times 512$};\\
+  \node[conv](d2){conv, 3x3, 512, ReLU}; & \node[desc]{$28 \times 28 \times 512$};\\
+  \node[pool](dp){maxpool, 2x2}; & \node[desc]{$14 \times 14 \times 512$};\\
+  \node[conv](e1){conv, 3x3, 512, ReLU}; & \node[desc]{$14 \times 14 \times 512$};\\
+  \node[conv](e2){conv, 3x3, 512, ReLU}; & \node[desc]{$14 \times 14 \times 512$};\\
+  \node[pool](ep){maxpool, 2x2}; & \node[desc]{$7 \times 7 \times 512$};\\
+  \node[pool](flatten){flatten}; & \node[desc]{$25088$};\\
+  \node[fc](fc1){FC, 4096}; & \node[desc]{$4096$};\\
+  \node[fc](fc2){FC, 4096}; & \node[desc]{$4096$};\\
+  \node[fc](fc3){FC, 1000}; & \node[desc]{$1000$};\\
+  \node[softmax](softmax){soft-max};  & \node[desc]{$1000$}; \\
+};
+
+\draw[decor] 
+  (ap.south west) -- 
+  node[blk label]{Block 1} 
+  (a1.north west);
+
+\draw[decor] 
+  (bp.south west) -- 
+  node[blk label]{Block 2} 
+  (b1.north west);
+
+\draw[decor] 
+  (cp.south west) -- 
+  node[blk label]{Block 3} 
+  (c1.north west);
+
+\draw[decor] 
+  (dp.south west) -- 
+  node[blk label]{Block 4} 
+  (d1.north west);
+
+\draw[decor] 
+  (ep.south west) -- 
+  node[blk label]{Block 5} 
+  (e1.north west);
+
+\draw[decor] 
+  (softmax.south west) -- 
+  node[blk label]{Top} 
+  (flatten.north west);
+
+
+\end{tikzpicture}
+\end{figure}
+\end{document}
