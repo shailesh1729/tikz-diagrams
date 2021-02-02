@@ -1,0 +1,87 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+  neuron/.style={
+    circle,
+    fill=red!20
+  },
+  group/.style={
+    rectangle,
+    draw=blue,
+    inner sep=0pt,
+  },
+  conn/.style={
+    -{Straight Barb[angle=60:2pt 3]},
+    thick,
+  },
+  io/.style={
+    outer sep=2pt
+  },
+  every edge/.style={
+    conn, draw
+  },
+  node distance=1mm,
+]
+\def\StepGap{10mm}
+\def\IoGap{5mm}
+% time step 0
+\node[neuron] (h00) {$\mathbf{h}_0^0$};
+\node[neuron, below=of h00] (h01) {$\mathbf{h}_0^1$};
+\node[neuron, below=of h01] (h02) {$\mathbf{h}_0^2$};
+\node[neuron, below=of h02] (h03) {$\mathbf{h}_0^3$};
+\node[group, fit=(h00) (h01) (h02) (h03)] (g0) {};
+\node[io, above=\IoGap of h00] (y0) {$y_0$};
+\node[io, below=\IoGap of h03] (x0) {$x_0$};
+\node[io, left=\IoGap of g0] (s0) {$s_0$};
+% time step 1
+\node[neuron, right=\StepGap of h00] (h10) {$\mathbf{h}_1^0$};
+\node[neuron, below=of h10] (h11) {$\mathbf{h}_1^1$};
+\node[neuron, below=of h11] (h12) {$\mathbf{h}_1^2$};
+\node[neuron, below=of h12] (h13) {$\mathbf{h}_1^3$};
+\node[group, fit=(h10) (h11) (h12) (h13)] (g1) {};
+\node[io, above=\IoGap of h10] (y1) {$y_1$};
+\node[io, below=\IoGap of h13] (x1) {$x_1$};
+% time step 2
+\node[neuron, right=\StepGap of h10] (h20) {$\mathbf{h}_2^0$};
+\node[neuron, below=of h20] (h21) {$\mathbf{h}_2^1$};
+\node[neuron, below=of h21] (h22) {$\mathbf{h}_2^2$};
+\node[neuron, below=of h22] (h23) {$\mathbf{h}_2^3$};
+\node[group, fit=(h20) (h21) (h22) (h23)] (g2) {};
+\node[io, above=\IoGap of h20] (y2) {$y_2$};
+\node[io, below=\IoGap of h23] (x2) {$x_2$};
+% intermediate steps
+\node[neuron, 
+  right=\StepGap of h20,
+  fill=none,
+  ] (hdots) {};
+% time step n
+\node[neuron, right=\StepGap of hdots] (hn0) {$\mathbf{h}_n^0$};
+\node[neuron, below=of hn0] (hn1) {$\mathbf{h}_n^1$};
+\node[neuron, below=of hn1] (hn2) {$\mathbf{h}_n^2$};
+\node[neuron, below=of hn2] (hn3) {$\mathbf{h}_n^3$};
+\node[group, fit=(hn0) (hn1) (hn2) (hn3)] (gn) {};
+\node[io, above=\IoGap of hn0] (yn) {$y_n$};
+\node[io, below=\IoGap of hn3] (xn) {$x_n$};
+% intermediate steps
+\node[](dots) at ($(h21)!1/2!(hn2)$) {\dots};
+
+% edges
+\draw (s0) edge (g0);
+\draw (g0) edge (g1)
+      (g1) edge (g2)
+      (g2) edge (dots)
+      (dots) edge (gn);
+\draw (x0) edge (g0)
+      (x1) edge (g1)
+      (x2) edge (g2)
+      (xn) edge (gn);
+\draw (g0) edge (y0)
+      (g1) edge (y1)
+      (g2) edge (y2)
+      (gn) edge (yn);
+
+\end{tikzpicture}
+\end{figure}
+\end{document}
