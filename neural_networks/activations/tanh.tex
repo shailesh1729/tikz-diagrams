@@ -1,0 +1,22 @@
+\documentclass[../../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+      title=Tanh activation function,
+      xlabel={$x$},
+      xmin=-5,
+      xmax=5,
+      minor x tick num=3,
+      ylabel={$\tanh(x)$},
+      ymin=-1.5,
+      ymax=1.5,
+      minor y tick num=3,
+      grid=both,
+      ]
+      \addplot[green,smooth] {tanh(x))};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+\end{document}
