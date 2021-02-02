@@ -1,0 +1,47 @@
+\documentclass[../../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+]
+% inputs
+\begin{scope}[node distance=5mm]
+\node[] (x1) {$x_1$};
+\node[below=of x1] (x2) {$x_2$};
+\node[below=of x2] (x3) {$x_3$};
+\end{scope}
+% weights
+\begin{scope}[node distance=5mm]
+\node[right=10mm of x1] (w1) {$w_1$};
+\node[below=of w1] (w2) {$w_2$};
+\node[below=of w2] (w3) {$w_3$};
+\end{scope}
+% sum
+\node[right=10mm of w2, font=\huge,
+  , circle, draw, outer sep=1mm](sum) {$\Sigma$};
+% bias
+\node["Bias", above=of sum](bias) {$b$};
+% activation
+\node[label={[align=center]Activate\\function}, rectangle, 
+  draw,right=of sum, outer sep=1mm](activation) {$f$};
+% output
+\node["Output", right=of activation](out) {$y$};
+
+% edges
+\draw[o->] 
+  (x1) edge (w1)
+  (x2) edge (w2)
+  (x3) edge (w3)
+  (bias) edge (sum);
+
+\draw[->]
+  (w1) edge (sum)
+  (w2) edge (sum)
+  (w3) edge (sum)
+  (sum) edge (activation)
+  (activation) edge (out)
+;
+\draw[decorate, decoration={brace, raise=5pt}] (x3.south west) -- node[above=5pt, sloped]{Inputs} (x1.north west);  
+\end{tikzpicture}
+\end{figure}
+\end{document}
