@@ -1,0 +1,76 @@
+\documentclass[../preview.tex]{subfiles}
+\begin{document} 
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+neuron/.style={
+  circle,
+  minimum size=10mm,
+  draw=blue,
+  outer sep=2pt,
+  fill=red!20,
+},
+every edge/.style={
+  -{Straight Barb[angle=60:2pt 3]},
+  draw=green!50!black,
+} 
+]
+\def\InputGap{15mm}
+% layer 1 input
+\begin{scope}[node distance=2mm]
+\node[neuron] (a10) {};
+\node[neuron, below=of a10] (a11) {};
+\node[neuron, below=of a11] (a12) {};
+\node[neuron, below=of a12] (a13) {};
+\node[neuron, below=of a13] (a14) {};
+\end{scope}
+% layer 0
+\coordinate[left=\InputGap of a10] (i0) {};
+\coordinate[left=\InputGap of a11] (i1) {};
+\coordinate[left=\InputGap of a12] (i2) {};
+\coordinate[left=\InputGap of a13] (i3) {};
+\coordinate[left=\InputGap of a14] (i4) {};
+% layer 2 hidden
+\begin{scope}[node distance=4mm]
+\node[neuron, right=20mm of a12] (a21) {};
+\node[neuron, above=of a21] (a20) {};
+\node[neuron, below=of a21] (a22) {};
+\end{scope}
+% layer 3 output
+\node[neuron, right=20mm of a21] (a30) {};
+\coordinate[right=\InputGap of a30] (out) {};
+
+% layer names
+\node[above=1mm of a10] (t1)
+{\begin{tabular}{c}Input\\layer\end{tabular}};
+
+\node[](t2) at (t1-|a20)
+{\begin{tabular}{c}Hidden\\layer\end{tabular}};
+
+\node[](t3) at (t1-|a30)
+{\begin{tabular}{c}Output\\layer\end{tabular}};
+
+% edges
+\draw 
+  (i0) edge node[above]{input 0} (a10)
+  (i1) edge node[above]{input 1} (a11)
+  (i2) edge node[above]{input 2} (a12)
+  (i3) edge node[above]{input 3} (a13)
+  (i4) edge node[above]{input 4} (a14)
+
+  (a10) edge (a20) edge (a21) edge (a22)
+  (a11) edge (a20) edge (a21) edge (a22)
+  (a12) edge (a20) edge (a21) edge (a22)
+  (a13) edge (a20) edge (a21) edge (a22)
+  (a14) edge (a20) edge (a21) edge (a22)
+
+  (a20) edge (a30)
+  (a21) edge (a30)
+  (a22) edge (a30)
+
+  (a30) edge node[above]{output} (out)
+
+  ;
+\end{tikzpicture}
+\end{figure}
+\end{document}
